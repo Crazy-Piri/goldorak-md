@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "SDCC - make",
+            "command": "killall -9 'Retro Virtual Machine 2' ; docker run --rm -v ${workspaceRoot}:/src -it sgdk",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": {
+                "owner": "base",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}/src"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):\\s+(warning|error|syntax error)[^:]*:\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "message": 4
+                }
+            }
+        },
+        {
+            "type": "shell",
+            "label": "SDCC - Retro Virtual Machine",
+            "command": "/Applications/blastem/blastem out/rom.bin"
+        },
+        {
+            "type": "shell",
+            "label": "SDCC - clean",
+            "command": "killall -9 'Retro Virtual Machine 2' ; docker run --rm -v /Users/miguelvanhove/Dropbox/Sources/cpc/brixen:/src/ -it redbug26/cptc-docker make clean"
+        }
+    ]
+}
